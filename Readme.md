@@ -60,6 +60,9 @@ ordered and changeable. No duplicates
 A block of reusable code
 place () after the function name to invoke it
 
+**return**
+Statement used to end a function and a result back to the caller
+
 **default argument**
 A default value for certain parameters
 default is used when that argument is omitted

@@ -1,52 +1,62 @@
-# Import the random module to generate random numbers
-import random
+import random  # Import the random module to generate random numbers
 
-# Game settings - change these to adjust the difficulty
-lowest_num = 1      # The smallest number you can guess
-highest_num = 100   # The largest number you can guess
-answer = random.randint(lowest_num, highest_num)  # Computer picks a random secret number
-guesses = 0         # Counter to track how many guesses the player makes
+# Define the lowest and highest numbers the user can guess
+lowest_num = 1
+highest_num = 100
 
-# Game control variable - keeps the game running until player wins
+# Generate a random number between lowest_num and highest_num
+answer = random.randint(lowest_num, highest_num)
+
+# Variable to count how many guesses the user makes
+guesses = 0
+
+# This variable controls whether the game keeps running
 is_running = True
 
-# Display game title and instructions
+# Display the game title
 print("Python Number Guessing Game")
+
+# Tell the user the valid number range
 print(f"Select a number between {lowest_num} and {highest_num}")
 
-# Main game loop - keeps running until player guesses correctly
+# Loop that runs until the correct number is guessed
 while is_running:
-    # Get the player's guess
+
+    # Ask the user to enter a guess (input is always a string)
     guess = input("Enter your guess: ")
-    
-    # Check if the input is a valid number (digits only)
+
+    # Check if the input contains only digits (prevents crashes)
     if guess.isdigit():
-        # Convert the input from text to an integer number
+
+        # Convert the string input into an integer
         guess = int(guess)
-        guesses += 1  # Increase guess count by 1
-        
-        # Check if guess is outside the allowed range
+
+        # Increase the number of guesses by 1
+        guesses += 1
+
+        # Check if the guess is outside the allowed range
         if guess < lowest_num or guess > highest_num:
             print("That number is out of range")
             print(f"Select a number between {lowest_num} and {highest_num}")
-        
-        # Check if guess is too low
+
+        # Check if the guess is too low
         elif guess < answer:
-            print("Too low! try again!")
-        
-        # Check if guess is too high  
+            print("Too low! Try again.")
+
+        # Check if the guess is too high
         elif guess > answer:
-            print("Too high! try again!")
-        
-        # If none of the above, guess must be correct!
+            print("Too high! Try again.")
+
+        # If none of the above are true, the guess is correct
         else:
-            print(f"CORRECT! The number was {answer}")
+            print(f"🎉 CORRECT! The answer was {answer}")
             print(f"Number of guesses: {guesses}")
-            is_running = False  # This ends the game loop
-    
-    # If input is not a valid number (contains letters or symbols)
+
+            # Stop the game loop
+            is_running = False
+
+    # Runs if the input is not a number
     else:
         print("Invalid guess")
-        print(f"Please enter a number between {lowest_num} and {highest_num}")
-
-# Game ends here - the loop stops when is_running becomes False
+        print(f"Select a number between {lowest_num} and {highest_num}")
+4

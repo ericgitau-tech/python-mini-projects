@@ -1,66 +1,86 @@
-import random  # Imports the random module to generate random choices
+import random  # Imports Python's random module so we can generate random results
 
-# This function generates one row of slot symbols
+# This function creates and returns one row of slot machine symbols
 def spin_row():
-    # List of possible slot symbols
+    # This list contains all possible symbols that can appear on the slot machine
     symbols = ['🍒', '🍉', '🍋', '🔔', '💫']
 
-    # Uses list comprehension to randomly select 3 symbols
-    # "_" is used because the loop variable itself is not needed
+    # This line randomly selects 3 symbols from the list above
+    # random.choice(symbols) picks ONE random symbol
+    # range(3) means this happens 3 times
+    # The result is stored in a list and returned
+    # "_" is used because we don't need the loop variable itself
     return [random.choice(symbols) for _ in range(3)]
 
-# This function prints the slot row in a formatted way
+# This function prints the slot machine row in a clean and readable format
 def print_row(row):
-    print("*************************")
-    # Joins the symbols in the row with " | " between them
-    print(" | ".join(row))
+    # Prints a decorative top border
     print("*************************")
 
-# This function calculates how much the user wins
+    # " | ".join(row) joins the symbols together with a separator
+    # Example output: 🍒 | 🍋 | 🔔
+    print(" | ".join(row))
+
+    # Prints a decorative bottom border
+    print("*************************")
+
+# This function checks if the player won and calculates the payout
 def get_payout(row, bet):
-    # Checks if all three symbols in the row are the same
+    # This checks if all three symbols in the row are exactly the same
+    # Example: 🍒 🍒 🍒
     if row[0] == row[1] == row[2]:
-        # Determines payout multiplier based on the symbol
+
+        # If all symbols match, payout depends on the symbol
+        # Each symbol has a different multiplier
+
         if row[0] == '🍒':
-            return bet * 3
+            return bet * 3  # Cherry gives 3x the bet
+
         elif row[0] == "🍉":
-            return bet * 4
+            return bet * 4  # Watermelon gives 4x the bet
+
         elif row[0] == "🍋":
-            return bet * 5
+            return bet * 5  # Lemon gives 5x the bet
+
         elif row[0] == "🔔":
-            return bet * 10
+            return bet * 10  # Bell gives 10x the bet
+
         elif row[0] == "💫":
-            return bet * 10
-    # Returns 0 if there is no winning combination
+            return bet * 10  # Star gives 10x the bet
+
+    # If the symbols do not all match, the player wins nothing
     return 0
  
-# Main function that runs the slot machine game
+# This is the main function where the game runs
 def main():
-    balance = 100  # Starting balance for the player
+    balance = 100  # The player starts the game with $100
 
-    # Displays welcome message and game info
+    # Prints the welcome message and game information
     print("*************************")
     print("Welcome to python Slots: ")
     print("Symbols: 🍒 🍉🍋 🔔 💫")
     print()
     print("*************************")
 
-    # Game loop continues while the player has money
+    # This loop keeps the game running as long as the player has money
     while balance > 0:
+        # Shows the player how much money they currently have
         print(f"Current balance: ${balance}")
 
-        # Takes bet input from the user
+        # Asks the player how much they want to bet
         bet = input("Place your bet amount: ")
         print()
 
-        # Validates that the bet is a number
+        # Checks if the input contains only numbers
+        # If not, the loop restarts
         if not bet.isdigit():
             print("Please enter a valid number")
             continue
 
+        # Converts the bet from a string to an integer
         bet = int(bet)
 
-        # Checks if the bet exceeds available balance
+        # Checks if the player is betting more than they have
         if bet > balance:
             print("Insuficient funds")
             continue
@@ -70,33 +90,42 @@ def main():
             print("Bet must be greater than 0")
             continue
 
-        # Deducts the bet from the balance
+        # Subtracts the bet amount from the balance before spinning
         balance -= bet
 
-        # Spins the slot machine
+        # Spins the slot machine by generating random symbols
         row = spin_row()
         print("Spinning...\n")
+
+        # Displays the slot result
         print_row(row)
 
-        # Calculates payout
+        # Calculates how much the player won (if anything)
         payout = get_payout(row, bet)
 
-        # Displays result of the spin
+        # Checks if the player won money
         if payout > 0:
             print(f"You won ${payout}")
         else:
             print("Sorry you lost this round")
 
-        # Adds winnings back to the balance
+        # Adds the winnings back to the player's balance
         balance += payout
 
-        # Asks player if they want to continue playing
+        # Asks the player if they want to keep playing
         play_again = input("Do you want to spin again? (Y/N): ").upper()
 
-        # Ends the game if the player chooses not to continue
+        # If the player does not enter 'Y', the game stops
         if play_again != 'Y':
             break
 
-# Ensures the program runs only when executed directly
+    # This message is shown after the game loop ends
+    # It runs when the player quits or runs out of money
+    print("*******************************************")
+    print(f"Game over your final balance is ${balance}")
+    print("*******************************************")
+
+# This ensures the program only runs when this file is executed directly
+# It prevents the game from running if the file is imported into another program
 if __name__ == '__main__':
     main()
